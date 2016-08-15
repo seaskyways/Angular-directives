@@ -76,6 +76,7 @@
     function ul(lis) {
         var t = "<ul>";
         angular.forEach(lis, function (li) {
+            if (!$(li).isTagName("li")) li = window.li(li);
             t += li;
         });
         t += "</ul>";
