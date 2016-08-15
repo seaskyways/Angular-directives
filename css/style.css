@@ -1,0 +1,81 @@
+@keyframes moveRight {
+    from{
+        position: relative;
+    }
+    to {
+        left: 20px;
+    }
+}
+
+@keyframes moveLeft {
+    from{
+        position: relative;
+    }
+    to {
+        right: 20px;
+    }
+}
+
+.lists-scrollable{
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.row-eq-height{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+}
+
+.wanted{
+    color: greenyellow;
+}
+
+.not-wanted{
+    color: darkred;
+}
+
+.left{
+    animation-name: moveLeft;
+    animation-duration: 1s;
+}
+.right{
+    animation-name: moveRight;
+    animation-duration: 1s;
+}
+
+
+.bg-1 {
+    background-color: #1abc9c; /* Green */
+    color: #ffffff;
+}
+
+ .error {
+     color: #FF0000;
+ }
+.btn-lg.round {
+    border-radius: 24px;
+    text-align: center;
+    background: #D54B52;
+    color: #D54B52;
+    margin:0px auto;
+    padding: 400px;
+}
+.bt {
+    margin:auto;
+    display:block;
+    text-align: center;
+}
+
+.btn-width{
+    width: 40vw;
+    height: 7vh;
+}
+
+@media (max-width: 768px) {
+    .btn-width{
+        height: 7vh;
+        width: 45vw;
+    }
+}
