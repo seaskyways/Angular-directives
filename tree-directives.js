@@ -97,7 +97,6 @@ angApp.directive("linkTo", function ($compile, $rootElement) {
 
                     function updateMaster(noApply) {
                         var group = new ChildrenGroup(attrs.linkTo);
-                        console.log(group);
 
                         if (group.atLeastOneIsCheckedButNotAll) {
                             element.prop("indeterminate", true);

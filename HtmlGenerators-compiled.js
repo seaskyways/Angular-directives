@@ -1,12 +1,8 @@
 "use strict";
 
-var _set = function set(object, property, value, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent !== null) { set(parent, property, value, receiver); } } else if ("value" in desc && desc.writable) { desc.value = value; } else { var setter = desc.set; if (setter !== undefined) { setter.call(receiver, value); } } return value; };
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _templateObject = _taggedTemplateLiteral(["\n<div>\n<ul>\n<li>\n    <input type=\"checkbox\">\n</li>\n</ul>\n</div>\n"], ["\n<div>\n<ul>\n<li>\n    <input type=\"checkbox\">\n</li>\n</ul>\n</div>\n"]);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
@@ -25,62 +21,6 @@ jQuery.fn.tagName = function () {
 jQuery.fn.isTagName = function (tagName) {
     return this.tagName() == tagName.toUpperCase();
 };
-
-var Child = function () {
-    _createClass(Child, [{
-        key: "update",
-        value: function update() {
-            console.log("hello from super");
-        }
-    }]);
-
-    function Child() {
-        _classCallCheck(this, Child);
-    }
-
-    return Child;
-}();
-
-var ChildrenGroup1 = function (_Child) {
-    _inherits(ChildrenGroup1, _Child);
-
-    function ChildrenGroup1() {
-        var element = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-        var required = arguments[1];
-
-        _classCallCheck(this, ChildrenGroup1);
-
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ChildrenGroup1).call(this));
-
-        var h = String.raw(_templateObject);
-
-        _this.hello = element;
-        _set(Object.getPrototypeOf(ChildrenGroup1.prototype), "hello", "hello", _this);
-        return _this;
-    }
-
-    // update(){
-    //     console.log("hello from child");
-    //     super.update();
-    // }
-
-
-    return ChildrenGroup1;
-}(Child);
-
-// import * as base from "base";
-
-function hello() {
-    for (var _len = arguments.length, x = Array(_len), _key = 0; _key < _len; _key++) {
-        x[_key] = arguments[_key];
-    }
-
-    console.log(x);
-    // console.log(base._elem);
-}
-
-var x = new ChildrenGroup1(li("Hello"));
-console.log(x);
 
 function ul(lis) {
     var t = "<ul>";
@@ -118,5 +58,223 @@ function checkbox(label, attrs) {
     t += ">" + label + "</label>";
     return t;
 }
+
+var checkboxTreeObject = {
+    label: "My master checkbox",
+    attrs: {},
+    class: "",
+    content: []
+};
+
+var ElementTemplate = function () {
+    function ElementTemplate() {
+        var label = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+        var attrs = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+        var className = arguments.length <= 2 || arguments[2] === undefined ? "" : arguments[2];
+
+        _classCallCheck(this, ElementTemplate);
+
+        this.initial = {
+            label: label,
+            attrs: attrs,
+            className: className
+        };
+        this.template = angular.copy(this.initial);
+    }
+
+    _createClass(ElementTemplate, [{
+        key: "setLabel",
+        value: function setLabel() {
+            var label = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+
+            this.template.label = label;
+        }
+    }, {
+        key: "setAttrs",
+        value: function setAttrs() {
+            var attrs = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+            this.template.attrs = attrs;
+        }
+    }, {
+        key: "setClass",
+        value: function setClass() {
+            var className = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+
+            this.template.className = className;
+        }
+    }, {
+        key: "getLabel",
+        value: function getLabel() {
+            return this.template.label;
+        }
+    }, {
+        key: "getAttrs",
+        value: function getAttrs() {
+            return this.template.attrs;
+        }
+    }, {
+        key: "getClass",
+        value: function getClass() {
+            return this.template.className;
+        }
+    }, {
+        key: "getTemplate",
+        value: function getTemplate() {
+            return this.template;
+        }
+    }]);
+
+    return ElementTemplate;
+}();
+
+var CheckboxTemplateObject = function (_ElementTemplate) {
+    _inherits(CheckboxTemplateObject, _ElementTemplate);
+
+    function CheckboxTemplateObject() {
+        var label = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+        var attrs = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+        var _this;
+
+        var className = arguments.length <= 2 || arguments[2] === undefined ? "" : arguments[2];
+
+        _classCallCheck(this, CheckboxTemplateObject);
+
+        var parent = (_this = _possibleConstructorReturn(this, Object.getPrototypeOf(CheckboxTemplateObject).call(this, label, attrs, className)), _this).initial;
+        parent.children = [];
+
+        for (var _len = arguments.length, children = Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
+            children[_key - 3] = arguments[_key];
+        }
+
+        _this.children = children;
+        for (var i in children) {
+            parent.children.push(children[i].getTemplate());
+        }_this.initial = parent;
+        _this.template = angular.copy(parent);
+        return _this;
+    }
+
+    _createClass(CheckboxTemplateObject, [{
+        key: "setChildren",
+        value: function setChildren() {
+            for (var _len2 = arguments.length, children = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+                children[_key2] = arguments[_key2];
+            }
+
+            this.template.children = children;
+        }
+    }, {
+        key: "getChildren",
+        value: function getChildren() {
+            return this.children;
+        }
+    }, {
+        key: "addChild",
+        value: function addChild(child) {
+            this.template.children.push(child);
+        }
+    }, {
+        key: "isCheckboxMaster",
+        value: function isCheckboxMaster() {
+            return this.template.children.length > 0;
+        }
+
+        /*@Override*/
+
+    }, {
+        key: "getTemplate",
+        value: function getTemplate() {
+            if (this.isCheckboxMaster() && this.getLabel() == "" && this.getAttrs() == {}) {
+                return this.template.children;
+            } else return _get(Object.getPrototypeOf(CheckboxTemplateObject.prototype), "getTemplate", this).call(this);
+        }
+    }]);
+
+    return CheckboxTemplateObject;
+}(ElementTemplate);
+
+var ChildrenArray = function (_Array) {
+    _inherits(ChildrenArray, _Array);
+
+    function ChildrenArray() {
+        _classCallCheck(this, ChildrenArray);
+
+        for (var _len3 = arguments.length, children = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+            children[_key3] = arguments[_key3];
+        }
+
+        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ChildrenArray).call(this, children));
+
+        _this2.i = 0;
+        return _this2;
+    }
+
+    _createClass(ChildrenArray, [{
+        key: "getNext",
+        value: function getNext() {
+            if (this.i == this.length - 1) return false;
+            this.i++;
+            return this[this.i];
+        }
+    }, {
+        key: "generateCheckboxTreeArray",
+        value: function generateCheckboxTreeArray() {
+            var result = [];
+            angular.forEach(this, function (child) {
+                if (child.isCheckboxMaster()) {
+                    // let subChildren = new ChildrenArray(...child.getChildren());
+                    var subArray = [];
+
+                    var _iteratorNormalCompletion = true;
+                    var _didIteratorError = false;
+                    var _iteratorError = undefined;
+
+                    try {
+                        for (var _iterator = this.getNext()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                            x = _step.value;
+
+                            subArray.push(li(checkbox(x.label, x.attrs)));
+                        }
+                    } catch (err) {
+                        _didIteratorError = true;
+                        _iteratorError = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion && _iterator.return) {
+                                _iterator.return();
+                            }
+                        } finally {
+                            if (_didIteratorError) {
+                                throw _iteratorError;
+                            }
+                        }
+                    }
+
+                    result.push(innerUlWithHeader(checkbox(child.getLabel(), child.getAttrs())));
+                }
+            });
+        }
+    }]);
+
+    return ChildrenArray;
+}(Array);
+
+var CheckboxTreeLevel =
+
+/**@param checkboxTemplateObject this parameter should be a CheckboxTemplateObject
+ * */
+function CheckboxTreeLevel(checkboxTemplateObject) {
+    _classCallCheck(this, CheckboxTreeLevel);
+
+    var template = checkboxTemplateObject.getTemplate();
+    this.result = "";
+
+    if (angular.isArray(template)) {} else if (angular.isObject(template)) {
+
+        this.result = ulWithHeader(checkbox(template.label, template.attrs), []);
+    }
+};
 
 //# sourceMappingURL=HtmlGenerators-compiled.js.map

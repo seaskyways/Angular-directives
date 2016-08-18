@@ -6,7 +6,7 @@
 
 var angApp = angular.module("app", []);
 
-$$ = angular.element;
+var $$ = angular.element;
 
 function onScopeInit(scope, scopeName) {
     switch (scopeName) {
@@ -100,7 +100,5 @@ angApp.controller("ctrl", function ($scope, $compile, $rootScope, $timeout) {
 function getScope() {
     return angular.element('[ng-controller]').scope();
 }
-
-s = getScope;
 
 //# sourceMappingURL=base-compiled.js.map
